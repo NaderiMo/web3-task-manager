@@ -1,115 +1,170 @@
-# web3-task-manager
+# Web3 Task Manager
 
-Technical Task - Web3 Authenticated Task Manager
+A modern task management application with Web3 authentication using wallet signatures.
 
-## Repository Structure
+## Features
 
-This project uses a Turbo monorepo structure to manage both backend and frontend applications:
+- 🔐 **Web3 Authentication**: Connect and authenticate using MetaMask or any Web3 wallet
+- ✍️ **Message Signing**: Secure authentication through wallet message signing
+- 🎫 **JWT Tokens**: Session management with JWT tokens
+- 🛡️ **Protected Routes**: Secure API endpoints requiring authentication
+- 🎨 **Modern UI**: Beautiful, responsive interface
+- 📱 **Mobile Friendly**: Works on all devices
+
+## Tech Stack
+
+### Frontend
+
+- React 19 with TypeScript
+- Reown SDK for Web3 integration
+- Wagmi for wallet connection
+- Vite for fast development
+
+### Backend
+
+- NestJS with TypeScript
+- Prisma ORM with PostgreSQL
+- JWT authentication
+- Ethers.js for signature verification
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- pnpm package manager
+- PostgreSQL database
+- MetaMask or any Web3 wallet
+
+### 1. Clone and Install Dependencies
+
+```bash
+git clone <repository-url>
+cd web3-task-manager
+pnpm install
+```
+
+### 2. Database Setup
+
+Create a PostgreSQL database and update the connection string in `apps/backend/.env`:
+
+```env
+DATABASE_URL="postgresql://username:password@localhost:5432/web3_task_manager"
+JWT_SECRET="your-super-secret-jwt-key-change-this-in-production"
+```
+
+### 3. Run Database Migrations
+
+```bash
+cd apps/backend
+pnpm prisma migrate dev
+```
+
+### 4. Start Development Servers
+
+```bash
+# Start both frontend and backend
+pnpm dev
+
+# Or start individually
+pnpm dev:frontend  # Frontend on http://localhost:5173
+pnpm dev:backend   # Backend on http://localhost:3000
+```
+
+### 5. Connect Your Wallet
+
+1. Open http://localhost:5173 in your browser
+2. Click "Connect Wallet" to connect MetaMask
+3. Sign the authentication message
+4. Start managing your tasks!
+
+## Authentication Flow
+
+1. **Wallet Connection**: User connects their Web3 wallet (MetaMask, etc.)
+2. **Nonce Generation**: Backend generates a unique nonce for the user
+3. **Message Signing**: User signs the authentication message with their wallet
+4. **Signature Verification**: Backend verifies the signature using ethers.js
+5. **JWT Token**: Backend issues a JWT token for session management
+6. **Protected Access**: User can now access protected routes with the JWT token
+
+## API Endpoints
+
+### Authentication
+
+- `GET /auth/nonce/:wallet` - Get authentication nonce
+- `POST /auth/authenticate` - Authenticate with signature
+
+### Tasks (Protected)
+
+- `GET /tasks` - Get user's tasks
+- `POST /tasks` - Create new task
+
+## Project Structure
 
 ```
 web3-task-manager/
 ├── apps/
-│   ├── backend/         # NestJS API server
-│   │   ├── src/         # Backend source code
-│   │   ├── prisma/      # Database schema and migrations
-│   │   ├── package.json # Backend dependencies
-│   │   └── README.md    # Backend documentation
-│   └── frontend/        # React + Vite application
-│       ├── src/         # Frontend source code
-│       ├── package.json # Frontend dependencies
-│       └── README.md    # Frontend documentation
-├── package.json         # Root workspace configuration
-├── turbo.json           # Turbo build system config
-└── pnpm-workspace.yaml  # pnpm workspace definition
+│   ├── frontend/          # React application
+│   │   ├── src/
+│   │   │   ├── contexts/  # React contexts
+│   │   │   ├── components/ # React components
+│   │   │   └── ...
+│   │   └── ...
+│   └── backend/           # NestJS API
+│       ├── src/
+│       │   ├── auth/      # Authentication module
+│       │   ├── tasks/     # Tasks module
+│       │   ├── prisma/    # Database service
+│       │   └── ...
+│       └── ...
+└── ...
 ```
 
-## Prerequisites
+## Development
 
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- [pnpm](https://pnpm.io/) package manager
-- [PostgreSQL](https://www.postgresql.org/) database
-
-## Quick Setup
+### Frontend Development
 
 ```bash
-# Install dependencies
-pnpm install
-
-# Set up environment variables
-cd apps/backend
-cp .env.example .env
-# Edit .env with your database configuration
-
-# Set up database
-npx prisma migrate dev --name init
-npx prisma generate
-
-# Start development servers
-pnpm dev:backend
-pnpm dev:frontend
+cd apps/frontend
+pnpm dev
 ```
 
-## Environment Variables
-
-### Backend (apps/backend/.env)
-
-```env
-# Database
-DATABASE_URL="postgresql://username:password@localhost:5432/databaseName"
-
-```
-
-### Database Setup
-
-1. Install PostgreSQL locally or use a cloud service
-2. Create a database: `createdb databaseName`
-3. Update the `DATABASE_URL` in your `.env` file
-4. Run migrations: `cd apps/backend && npx prisma migrate dev`
-
-## How to Run
-
-💡 This project uses [pnpm](https://pnpm.io/) as the package manager for efficient dependency management and workspace support.
+### Backend Development
 
 ```bash
-# Install dependencies of backend and frontend
-pnpm install
-
-# Set up database (first time only)
 cd apps/backend
-npx prisma migrate dev --name init
-
-# Run backend in development mode
-pnpm dev:backend
-
-# Run frontend in development mode
-pnpm dev:frontend
+pnpm start:dev
 ```
 
-- Backend API:
-  [http://localhost:3001/api](http://localhost:3001/api)
-- Backend Health Check:
-  [http://localhost:3001/health](http://localhost:3001/health)
-- Frontend:
-  [http://localhost:3000](http://localhost:3000)
-
-## Database Management
+### Database Management
 
 ```bash
-# Navigate to backend directory
 cd apps/backend
-
-# Run migrations
-npx prisma migrate dev
-
-# Open database GUI
-npx prisma studio
-
-# Reset database (⚠️ deletes all data)
-npx prisma migrate reset
+pnpm prisma studio  # Open Prisma Studio
+pnpm prisma migrate dev  # Run migrations
+pnpm prisma generate  # Generate Prisma client
 ```
 
-## Tech Stack
+## Security Considerations
 
-- **Monorepo**: [Turbo](https://turbo.build/)
-- **Backend**: [NestJS](https://nestjs.com/) + [Prisma](https://www.prisma.io/) + [PostgreSQL](https://www.postgresql.org/)
-- **Frontend**: [React](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **JWT Secret**: Change the JWT secret in production
+- **CORS**: Configure CORS properly for production
+- **Rate Limiting**: Implement rate limiting for auth endpoints
+- **Nonce Storage**: Use Redis for nonce storage in production
+- **HTTPS**: Always use HTTPS in production
+
+## CORS Configuration
+
+The backend is configured with permissive CORS settings for development (`origin: true`). For production, update the CORS configuration in `apps/backend/src/main.ts` to specify exact allowed origins for security.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+MIT License - see LICENSE file for details

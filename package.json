@@ -1,7 +1,6 @@
 {
   "packageManager": "pnpm@8.15.0",
   "scripts": {
-    "dev": "turbo run dev",
     "dev:frontend": "turbo run dev --filter=frontend",
     "dev:backend": "turbo run start:dev --filter=@web3-task-manager/backend",
     "build": "turbo run build",

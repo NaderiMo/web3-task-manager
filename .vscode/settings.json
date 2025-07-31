@@ -1,7 +1,15 @@
 {
-    "workbench.colorCustomizations": {
-        "activityBar.background": "#0E3513",
-        "titleBar.activeBackground": "#134A1A",
-        "titleBar.activeForeground": "#F3FCF4"
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#0E3513",
+    "titleBar.activeBackground": "#134A1A",
+    "titleBar.activeForeground": "#F3FCF4"
+  },
+  "cSpell.customDictionaries": {
+    "custom-dictionary-workspace": {
+      "name": "custom-dictionary-workspace",
+      "path": "${workspaceFolder:web3-task-manager}/.cspell/custom-dictionary-workspace.txt",
+      "addWords": true,
+      "scope": "workspace"
     }
+  }
 }
