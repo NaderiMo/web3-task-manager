@@ -7,13 +7,12 @@ interface User {
 }
 
 interface AuthState {
-  user: User | null;
+  user: any;
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
 
-  // Actions
   login: () => Promise<void>;
   logout: () => void;
   setError: (error: string | null) => void;
@@ -90,9 +89,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch (error) {
       console.error("Login failed:", error);
       const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Authentication failed. Please try again.";
+        error instanceof Error ? error.message : "Login failed";
       set({
         error: errorMessage,
         isLoading: false,

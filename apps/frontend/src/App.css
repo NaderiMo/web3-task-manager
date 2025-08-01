@@ -1,26 +1,54 @@
+/* Modern, minimal styles */
 .App {
-  @apply min-h-screen p-5;
+  @apply min-h-screen;
 }
 
-.App-header {
-  @apply text-center mb-10;
+/* Remove old gradient background and use clean gray */
+body {
+  background-color: #f9fafb;
 }
 
-.App-header h1 {
-  @apply text-4xl font-bold text-gray-800 mb-2 drop-shadow-sm;
+/* Custom scrollbar for modern browsers */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-main {
-  @apply max-w-6xl mx-auto;
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .App {
-    @apply p-2.5;
-  }
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
 
-  .App-header h1 {
-    @apply text-3xl;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Focus styles for accessibility */
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Custom button hover effects */
+.btn-modern {
+  @apply relative overflow-hidden;
+}
+
+.btn-modern::before {
+  content: "";
+  @apply absolute inset-0 bg-white opacity-0 transition-opacity duration-200;
+}
+
+.btn-modern:hover::before {
+  @apply opacity-10;
 }
