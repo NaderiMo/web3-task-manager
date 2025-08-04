@@ -28,7 +28,6 @@ export const useToastStore = create<ToastState>((set, get) => ({
       toasts: [...state.toasts, newToast],
     }));
 
-    // Auto remove after duration
     setTimeout(
       () => {
         get().removeToast(id);

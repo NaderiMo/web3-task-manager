@@ -4,19 +4,22 @@ A modern task management application with Web3 authentication using wallet signa
 
 ## Features
 
-- 🔐 **Web3 Authentication**: Connect and authenticate using MetaMask or any Web3 wallet
-- ✍️ **Message Signing**: Secure authentication through wallet message signing
-- 🎫 **JWT Tokens**: Session management with JWT tokens
-- 🛡️ **Protected Routes**: Secure API endpoints requiring authentication
-- 🎨 **Modern UI**: Beautiful, responsive interface
-- 📱 **Mobile Friendly**: Works on all devices
+- **Web3 Authentication**: Connect and authenticate using MetaMask or any Web3 wallet
+- **Message Signing**: Secure authentication through wallet message signing
+- **JWT Tokens**: Session management with JWT tokens
+- **Protected Routes**: Secure API endpoints requiring authentication
+- **Modern UI**: Beautiful, responsive interface
+- **Mobile Friendly**: Works on all devices
+- **Performance Optimized**: Handles 10,000+ tasks efficiently with virtualization, pagination, and lazy loading
+- **Advanced Search**: Real-time search and filtering capabilities
+- **Virtual Scrolling**: Smooth performance with large datasets
 
 ## Tech Stack
 
 ### Frontend
 
 - React 19 with TypeScript
-- Reown SDK for Web3 integration
+- MetaMask Web3 integration
 - Wagmi for wallet connection
 - Vite for fast development
 
@@ -96,8 +99,45 @@ pnpm dev:backend   # Backend on http://localhost:3000
 
 ### Tasks (Protected)
 
-- `GET /tasks` - Get user's tasks
+- `GET /tasks` - Get user's tasks, search, and filtering
 - `POST /tasks` - Create new task
+- `GET /tasks/:id` - Get specific task
+- `PATCH /tasks/:id` - Update task
+- `DELETE /tasks/:id` - Delete task
+- `POST /tasks/:id/start-processing` - Start task processing
+
+### Query Parameters for Tasks
+
+- `page` - Page number (default: 1)
+- `limit` - Items per page (default: 20, max: 100)
+- `search` - Search in title and description
+- `status` - Filter by status (pending, processing, processed, failed)
+
+## Performance Optimizations
+
+### Large Task List Handling (10,000+ Tasks)
+
+The application is optimized to handle large numbers of tasks efficiently:
+
+#### Frontend Optimizations
+
+- **Virtual Scrolling**: Only renders visible task items, dramatically reducing DOM nodes
+- **Debounced Search**: Prevents excessive API calls during typing
+- **Lazy Loading**: Tasks are loaded on-demand as needed
+- **Memoization**: Components are optimized to prevent unnecessary re-renders
+
+#### Backend Optimizations
+
+- **Database Pagination**: Efficient SQL queries with LIMIT and OFFSET
+- **Indexed Queries**: Optimized database indexes for fast searches
+- **Filtering**: Server-side filtering by status and search terms
+- **Caching**: Background job results are cached to reduce database load
+
+#### Performance Features
+
+- **Real-time Search**: Instant filtering as you type
+- **Status Filtering**: Filter by task status (pending, processing, processed, failed)
+- **Loading States**: Smooth loading indicators for better UX
 
 ## Project Structure
 
@@ -106,14 +146,19 @@ web3-task-manager/
 ├── apps/
 │   ├── frontend/          # React application
 │   │   ├── src/
-│   │   │   ├── contexts/  # React contexts
-│   │   │   ├── components/ # React components
-│   │   │   └── ...
+│   │   │   ├── components/
+│   │   │   │   ├── Tasks/
+│   │   │   │   │   ├── components/
+│   │   │   │   │   │   ├── VirtualizedTaskList.tsx  # Virtual scrolling
+│   │   │   │   │   │   └── Search.tsx      # Search & filtering
+│   │   │   │   │   └── index.tsx                    # Main tasks component
+│   │   │   │   └── ...
+│   │   │   └── stores
 │   │   └── ...
 │   └── backend/           # NestJS API
 │       ├── src/
 │       │   ├── auth/      # Authentication module
-│       │   ├── tasks/     # Tasks module
+│       │   ├── tasks/     # Tasks module with pagination
 │       │   ├── prisma/    # Database service
 │       │   └── ...
 │       └── ...
@@ -156,15 +201,3 @@ pnpm prisma generate  # Generate Prisma client
 ## CORS Configuration
 
 The backend is configured with permissive CORS settings for development (`origin: true`). For production, update the CORS configuration in `apps/backend/src/main.ts` to specify exact allowed origins for security.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## License
-
-MIT License - see LICENSE file for details

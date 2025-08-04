@@ -1,13 +1,9 @@
 import { create } from "zustand";
 import { useWeb3Store } from "./web3Store";
-
-interface User {
-  id: string;
-  wallet: string;
-}
+import type { User } from "../types/user";
 
 interface AuthState {
-  user: any;
+  user: User | null;
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -38,7 +34,6 @@ export const useAuthStore = create<AuthState>((set) => ({
         throw new Error("Wallet not connected");
       }
 
-      // Step 1: Get nonce from backend
       const nonceResponse = await fetch(
         `${API_BASE_URL}/auth/nonce/${address}`
       );
@@ -49,10 +44,8 @@ export const useAuthStore = create<AuthState>((set) => ({
       }
       const { message } = await nonceResponse.json();
 
-      // Step 2: Sign the message with wallet
       const signature = await signMessage(message);
 
-      // Step 3: Authenticate with backend
       const authResponse = await fetch(`${API_BASE_URL}/auth/authenticate`, {
         method: "POST",
         headers: {
@@ -74,7 +67,6 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       const authData = await authResponse.json();
 
-      // Store token and user data
       set({
         token: authData.access_token,
         user: authData.user,
@@ -83,7 +75,6 @@ export const useAuthStore = create<AuthState>((set) => ({
         error: null,
       });
 
-      // Save to localStorage
       localStorage.setItem("auth_token", authData.access_token);
       localStorage.setItem("auth_user", JSON.stringify(authData.user));
     } catch (error) {
@@ -106,7 +97,6 @@ export const useAuthStore = create<AuthState>((set) => ({
       error: null,
     });
 
-    // Clear localStorage
     localStorage.removeItem("auth_token");
     localStorage.removeItem("auth_user");
   },
@@ -115,7 +105,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   setLoading: (loading: boolean) => set({ isLoading: loading }),
 }));
 
-// Initialize auth state from localStorage on app start
 export const initializeAuthStateFromLocalStorage = () => {
   const savedToken = localStorage.getItem("auth_token");
   const savedUser = localStorage.getItem("auth_user");

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@heroui/modal": "^2.2.21",
+    "@heroui/pagination": "^2.2.22",
     "@heroui/toast": "^2.0.14",
     "@reown/appkit": "^1.7.17",
     "@reown/appkit-adapter-wagmi": "^1.7.17",

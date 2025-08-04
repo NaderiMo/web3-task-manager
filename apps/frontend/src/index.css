@@ -31,7 +31,6 @@
     position: relative;
   }
 
-  /* Grainy background effect */
   body::before {
     content: "";
     position: fixed;
@@ -45,7 +44,6 @@
     z-index: -1;
   }
 
-  /* Modern typography */
   h1,
   h2,
   h3,
@@ -56,14 +54,12 @@
     line-height: 1.25;
   }
 
-  /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
   }
 }
 
 @layer components {
-  /* Glass morphism card styles */
   .glass-card {
     @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-xl;
   }
@@ -72,7 +68,6 @@
     @apply hover:bg-white/80 hover:backdrop-blur-2xl hover:shadow-2xl transition-all duration-300;
   }
 
-  /* Glass morphism button styles */
   .btn-primary {
     @apply relative bg-blue-500/20 backdrop-blur-xl text-blue-900 px-6 py-3 rounded-xl font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-xl hover:shadow-2xl overflow-hidden border border-blue-500/30;
   }
@@ -211,7 +206,6 @@
     @apply transform scale-95;
   }
 
-  /* Glass success button */
   .btn-success {
     @apply relative bg-green-500/20 backdrop-blur-xl text-green-700 px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-xl hover:shadow-2xl overflow-hidden border border-green-500/30;
   }
@@ -258,39 +252,32 @@
     @apply transform scale-95;
   }
 
-  /* Card styles with blur effects */
   .card {
     @apply bg-white/70 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-6;
   }
 
-  /* Input styles with blur effects */
   .input-modern {
     @apply w-full px-4 py-3 border border-white/30 bg-white/50 backdrop-blur-sm rounded-xl focus:border-blue-500/50 focus:bg-white/70 focus:backdrop-blur-md focus:ring-2 focus:ring-blue-500/20 transition-all duration-300;
   }
 
-  /* Loading spinner with blur */
   .spinner {
     @apply animate-spin rounded-full border-2 border-gray-300/50 border-t-blue-500/80 backdrop-blur-sm;
   }
 
-  /* Blur overlay for modals */
   .blur-overlay {
     @apply fixed inset-0 bg-black/20 backdrop-blur-sm;
   }
 
-  /* Grainy texture overlay */
   .grain-overlay {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     opacity: 0.02;
   }
 
-  /* Button content wrapper to ensure text is above glass layers */
   .btn-content {
     @apply relative z-10 flex items-center justify-center gap-2 font-semibold;
   }
 }
 
-/* Custom animations with blur effects */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -353,7 +340,6 @@
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* Custom scrollbar with blur */
 ::-webkit-scrollbar {
   width: 8px;
 }

@@ -7,7 +7,6 @@ interface Web3State {
   error: string | null;
   isLoading: boolean;
 
-  // Actions
   initializeWeb3: () => Promise<void>;
   connect: () => Promise<void>;
   disconnect: () => void;
@@ -27,9 +26,7 @@ export const useWeb3Store = create<Web3State>((set, get) => ({
     try {
       set({ isLoading: true, error: null });
 
-      // Check if MetaMask is available
       if (typeof window.ethereum !== "undefined") {
-        // Set up event listeners
         window.ethereum.on("accountsChanged", (accounts: string[]) => {
           if (accounts.length === 0) {
             set({
@@ -54,7 +51,6 @@ export const useWeb3Store = create<Web3State>((set, get) => ({
           });
         });
 
-        // Check if already connected
         try {
           const accounts = await window.ethereum.request({
             method: "eth_accounts",
@@ -66,9 +62,7 @@ export const useWeb3Store = create<Web3State>((set, get) => ({
               error: null,
             });
           }
-        } catch (error) {
-          console.log("No existing connection", error);
-        }
+        } catch (error) {}
       }
 
       set({ isInitialized: true, isLoading: false });

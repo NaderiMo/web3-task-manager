@@ -28,8 +28,6 @@ export class AuthService {
     const nonce = Math.floor(Math.random() * 1000000).toString();
     const message = `Sign this message to authenticate with Web3 Task Manager. Nonce: ${nonce}`;
 
-    // Store the nonce temporarily (in production, you might want to store this in Redis)
-    // For now, we'll use the message itself as the verification
     return message;
   }
 
@@ -49,13 +47,11 @@ export class AuthService {
   async authenticate(authRequest: AuthRequest): Promise<AuthResponse> {
     const { wallet, signature, message } = authRequest;
 
-    // Verify the signature
     const isValid = await this.verifySignature(wallet, signature, message);
     if (!isValid) {
       throw new UnauthorizedException('Invalid signature');
     }
 
-    // Find or create user
     let user = await this.prisma.user.findUnique({
       where: { wallet: wallet.toLowerCase() },
     });
@@ -68,7 +64,6 @@ export class AuthService {
       });
     }
 
-    // Generate JWT token
     const payload = { sub: user.id, wallet: user.wallet };
     const access_token = this.jwtService.sign(payload);
 

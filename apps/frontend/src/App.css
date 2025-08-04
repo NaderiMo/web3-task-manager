@@ -1,14 +1,11 @@
-/* Modern, minimal styles */
 .App {
   @apply min-h-screen;
 }
 
-/* Remove old gradient background and use clean gray */
 body {
   background-color: #f9fafb;
 }
 
-/* Custom scrollbar for modern browsers */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -26,12 +23,10 @@ body {
   background: #94a3b8;
 }
 
-/* Smooth transitions for all interactive elements */
 * {
   transition: all 0.2s ease-in-out;
 }
 
-/* Focus styles for accessibility */
 button:focus,
 input:focus,
 textarea:focus {
@@ -39,7 +34,6 @@ textarea:focus {
   outline-offset: 2px;
 }
 
-/* Custom button hover effects */
 .btn-modern {
   @apply relative overflow-hidden;
 }
