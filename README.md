@@ -54,6 +54,9 @@ Create a PostgreSQL database and update the connection string in `apps/backend/.
 ```env
 DATABASE_URL="postgresql://username:password@localhost:5432/web3_task_manager"
 JWT_SECRET="your-super-secret-jwt-key-change-this-in-production"
+REDIS_HOST=host
+REDIS_PORT=port
+REDIS_PASSWORD=pass
 ```
 
 ### 3. Run Database Migrations
